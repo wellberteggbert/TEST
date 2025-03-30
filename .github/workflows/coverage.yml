@@ -1,21 +1,35 @@
-name: Python package
-on: [push, pull_request]
+name: Test Soft
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
 
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
-    env: ${{secrets.COVERALLS_REPO_TOKEN}}
-    
+
     steps:
-    - uses: actions/checkout@v2
+    - name: Checkout code
+      uses: actions/checkout@v2
+
     - name: Set up Python
       uses: actions/setup-python@v2
       with:
-        python-version: '3.x'
+        python-version: '3.8'  # Укажите нужную версию Python
+
     - name: Install dependencies
       run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
         pip install coverage coveralls
+
     - name: Run tests with coverage
       run: |
-        coverage run -m unittest discover
-        coveralls
+        coverage run -m pytest  # Запустите ваши тесты с coverage
+        coveralls  # Отправьте отчет в Coveralls
+
+      env:
+        COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
