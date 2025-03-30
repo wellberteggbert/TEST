@@ -38,7 +38,21 @@ jobs:
       run: |
         pytest
         
-    - name: SonarCloud Scan
-      uses: SonarSource/sonarqube-scan-action
-      with:
-        args: '-Dsonar.projectKey=wellberteggbert_TEST'
+name: SonarQube Analysis
+on:
+  push:
+    branches:
+      - main
+jobs:
+  sonarcloud:
+    docker:
+      - image: sonarsource/sonar-scanner-cli
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: SonarScanner
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }} # добавьте ваш токен SonarQube в Secrets
+        run: sonar-scanner
