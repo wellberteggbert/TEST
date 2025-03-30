@@ -37,3 +37,8 @@ jobs:
     - name: Test with pytest
       run: |
         pytest
+        
+    - name: SonarCloud Scan
+      uses: SonarSource/sonarcloud-github-action@master
+      with:
+        args: '-Dsonar.projectKey=wellberteggbert_TEST'
