@@ -2,20 +2,20 @@ import unittest
 from quadratic_func import solve_quadratic
 
 class TestQuadratic(unittest.TestCase):
+
+    def test_zero_a(self):
+        with self.assertRaises(ValueError):
+            solve_quadratic(0, 2, 1)
     
-    def standard_cases(self):
+    def test_standard_cases(self):
         self.assertEqual(solve_quadratic(1, -3, 2), (2, 1))
         self.assertEqual(solve_quadratic(1, 2, 1), (-1, -1))
         self.assertEqual(solve_quadratic(1, 0, -4), (2, -2))
 
-    def complex_roots(self):
+    def test_complex_roots(self):
         self.assertEqual(solve_quadratic(1, 2, 5), (-1 + 2j, -1 - 2j))
 
-    def zero_a(self):
-        with self.assertRaises(ValueError):
-            solve_quadratic(0, 2, 1)
-
-    def negative_discriminant(self):
+    def test_negative_discriminant(self):
         self.assertEqual(solve_quadratic(1, 0, 1), (0 + 1j, 0 - 1j))
 
 if __name__ == '__main__':
