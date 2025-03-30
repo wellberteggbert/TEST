@@ -39,6 +39,6 @@ jobs:
         pytest
         
     - name: SonarCloud Scan
-      uses: SonarSource/sonarcloud-github-action@master
+      uses: SonarSource/sonarqube-scan-action
       with:
         args: '-Dsonar.projectKey=wellberteggbert_TEST'
